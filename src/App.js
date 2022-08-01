@@ -12,9 +12,20 @@ function App() {
       alert("1글자 이상 입력해주세요");
       return;
     }
-    //////////
 
-    setTodos((currentArray) => [todo, ...currentArray]);
+    // 새로운 배열을 만드는 방법
+    {
+      /*const newArr = [];
+    for (let i = 0; i < todos.length; i++) {
+      newArr[i] = todos[i];
+    }
+    newArr.push(todo);
+  setTodos(newArr);*/
+    }
+
+    // concat을 이용하는 방법
+    // setTodos((currentArray) => currentArray.concat(todo));
+    //setTodos((currentArray) => [todo, ...currentArray]);
     setTodo("");
   };
   return (

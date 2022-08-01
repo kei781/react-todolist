@@ -20,12 +20,12 @@ function App() {
       newArr[i] = todos[i];
     }
     newArr.push(todo);
-  setTodos(newArr);*/
+    setTodos(newArr);*/
     }
 
     // concat을 이용하는 방법
     // setTodos((currentArray) => currentArray.concat(todo));
-    //setTodos((currentArray) => [todo, ...currentArray]);
+    setTodos((currentArray) => [todo, ...currentArray]);
     setTodo("");
   };
   return (
@@ -48,6 +48,12 @@ function App() {
       >
         check
       </button>
+      <hr />
+      <ul>
+        {todos.map((todo, index) => (
+          <li key={index}>{todo}</li>
+        ))}
+      </ul>
     </div>
   );
 }

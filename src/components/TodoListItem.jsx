@@ -1,18 +1,23 @@
 import React from "react";
 import {
-  MdCheckBox,
   MdCheckBoxOutlineBlank,
-  MdModeEditOutline,
   MdRemoveCircleOutline,
+  MdCheckBox,
+  MdModeEditOutline,
 } from "react-icons/md";
 import cn from "classnames";
 import "../styles/TodoListItem.scss";
 
-const TodoListItem = ({ todo }) => {
+const TodoListItem = ({ todo, onToggle }) => {
   const { id, text, checked } = todo;
   return (
     <li className="TodoListItem">
-      <div className={cn("checkbox", { checked: checked })}>
+      <div
+        className={cn("checkbox", { checked: checked })}
+        onClick={() => {
+          onToggle(id);
+        }}
+      >
         {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
         <div className="text">{text}</div>
       </div>

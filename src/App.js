@@ -5,9 +5,10 @@ import TodoTemplate from "./components/TodoTemplate";
 function App() {
   const [todos, setTodos] = useState([]);
   const nextId = useRef(1);
+
   const onInsert = (text) => {
     const todo = {
-      id: nextId,
+      id: nextId.current,
       text: text,
       checked: false,
     };
@@ -15,10 +16,18 @@ function App() {
     nextId.current++;
   };
 
+  const onToggle = (id) => {
+    setTodos((todos) =>
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, checked: !todo.checked } : todo
+      )
+    );
+  };
+
   return (
     <TodoTemplate>
       <TodoInsert onInsert={onInsert} />
-      <TodoList todos={todos} />
+      <TodoList todos={todos} onToggle={onToggle} />
     </TodoTemplate>
   );
 }

@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
-import TestComponent from "./components/TestComponent";
 import TodoEdit from "./components/TodoEdit";
 import TodoInsert from "./components/TodoInsert";
 import TodoList from "./components/TodoList";
 import TodoTemplate from "./components/TodoTemplate";
+
 function App() {
   const [todos, setTodos] = useState([]);
   const [insertToggle, setInsertToggle] = useState(false);
@@ -60,7 +60,6 @@ function App() {
           onUpdate={onUpdate}
         />
       )}
-      <TestComponent />
     </TodoTemplate>
   );
 }

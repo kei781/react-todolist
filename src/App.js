@@ -6,6 +6,7 @@ import TodoTemplate from "./components/TodoTemplate";
 function App() {
   const [todos, setTodos] = useState([]);
   const [insertToggle, setInsertToggle] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState(null);
   const nextId = useRef(1);
 
   const onInsert = (text) => {
@@ -42,8 +43,11 @@ function App() {
         onRemove={onRemove}
         onToggle={onToggle}
         onInsertToggle={onInsertToggle}
+        setSelectedTodo={setSelectedTodo}
       />
-      {insertToggle && <TodoEdit onInsertToggle={onInsertToggle} />}
+      {insertToggle && (
+        <TodoEdit onInsertToggle={onInsertToggle} selectedTodo={selectedTodo} />
+      )}
     </TodoTemplate>
   );
 }

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
+
 import "../styles/TodoEdit.scss";
 
-const TodoEdit = ({ onInsertToggle, selectedTodo }) => {
+const TodoEdit = ({ selectedTodo, onUpdate }) => {
   const [value, setValue] = useState("");
   const onChange = (e) => {
     setValue(e.target.value);
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    onInsertToggle();
+    onUpdate(selectedTodo.id, value);
+    setValue("");
   };
   useEffect(() => {
     setValue(selectedTodo.text);

@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
+import TodoEdit from "./components/TodoEdit";
 import TodoInsert from "./components/TodoInsert";
 import TodoList from "./components/TodoList";
 import TodoTemplate from "./components/TodoTemplate";
 function App() {
   const [todos, setTodos] = useState([]);
+  const [insertToggle, setInsertToggle] = useState(false);
   const nextId = useRef(1);
 
   const onInsert = (text) => {
@@ -14,6 +16,10 @@ function App() {
     };
     setTodos((todos) => todos.concat(todo));
     nextId.current++;
+  };
+
+  const onInsertToggle = () => {
+    setInsertToggle((prev) => !prev);
   };
 
   const onRemove = (id) => {
@@ -31,7 +37,13 @@ function App() {
   return (
     <TodoTemplate>
       <TodoInsert onInsert={onInsert} />
-      <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} />
+      <TodoList
+        todos={todos}
+        onRemove={onRemove}
+        onToggle={onToggle}
+        onInsertToggle={onInsertToggle}
+      />
+      {insertToggle && <TodoEdit onInsertToggle={onInsertToggle} />}
     </TodoTemplate>
   );
 }

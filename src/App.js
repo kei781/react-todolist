@@ -31,12 +31,12 @@ function App() {
     setTodos((todos) => todos.filter((todo) => todo.id !== id));
   };
 
-  const onToggle = (id) => {
-    setTodos((todos) =>
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, checked: !todo.checked } : todo
-      )
-    );
+  const onToggle = async (id) => {
+    const data = await axios({
+      url: `http://localhost:4000/todos/check/${id}`,
+      method: "PATCH",
+    });
+    setTodos(data.data);
   };
 
   const onUpdate = (id, text) => {
@@ -53,6 +53,7 @@ function App() {
           url: "http://localhost:4000/todos",
           method: "GET",
         });
+
         console.log(data.data);
         setTodos(data.data);
         setIsLoading(false);
@@ -66,6 +67,7 @@ function App() {
         setError(e);
       }
     };
+
     getData();
   }, []);
 

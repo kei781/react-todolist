@@ -32,11 +32,15 @@ function App() {
   };
 
   const onToggle = async (id) => {
-    const data = await axios({
-      url: `http://localhost:4000/todos/check/${id}`,
-      method: "PATCH",
-    });
-    setTodos(data.data);
+    try {
+      const data = await axios({
+        url: `http://localhost:4000/todos/check/${id}`,
+        method: "PATCH",
+      });
+      setTodos(data.data);
+    } catch (e) {
+      setError(e);
+    }
   };
 
   const onUpdate = (id, text) => {

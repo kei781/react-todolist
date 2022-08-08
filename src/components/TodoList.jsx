@@ -8,6 +8,9 @@ const TodoList = ({
   onToggle,
   onInsertToggle,
   setSelectedTodo,
+  handleDragStart,
+  handleDragOver,
+  handleDrop,
 }) => {
   return (
     <ul className="TodoList">
@@ -21,6 +24,9 @@ const TodoList = ({
             onToggle={onToggle}
             onInsertToggle={onInsertToggle}
             setSelectedTodo={setSelectedTodo}
+            handleDragStart={handleDragStart}
+            handleDragOver={handleDragOver}
+            handleDrop={handleDrop}
           />
         );
       })}

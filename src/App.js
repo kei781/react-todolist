@@ -13,6 +13,39 @@ function App() {
   const [error, setError] = useState(null);
   const nextId = useRef(4);
 
+  const handleDragStart = (e, todo) => {
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("tmp", JSON.stringify(todo));
+  };
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = async (e, targetItem) => {
+    e.preventDefault();
+    try {
+      const originalItem = await JSON.parse(e.dataTransfer.getData("tmp")); // 1
+      // setTodos((todos) =>
+      //   todos.map((todo) => {
+      //     return todo.id === targetItem.id
+      //       ? { ...originalItem, id: targetItem.id }
+      //       : todo.id === originalItem.id
+      //       ? { ...targetItem, id: originalItem.id }
+      //       : todo;
+      //   })
+      // );
+      const data = await axios({
+        url: `http://localhost:4000/todos/swap/${originalItem.id}`,
+        method: "PATCH",
+        data: { targetId: targetItem.id },
+      });
+
+      setTodos(data.data);
+    } catch (e) {
+      setError(e);
+    }
+  };
+
   const onInsert = (text) => {
     const todo = {
       id: nextId.current,
@@ -58,7 +91,6 @@ function App() {
           method: "GET",
         });
 
-        console.log(data.data);
         setTodos(data.data);
         setIsLoading(false);
         // throw new Error("조회중 에러발생!!");
@@ -92,6 +124,9 @@ function App() {
         onToggle={onToggle}
         onInsertToggle={onInsertToggle}
         setSelectedTodo={setSelectedTodo}
+        handleDragStart={handleDragStart}
+        handleDragOver={handleDragOver}
+        handleDrop={handleDrop}
       />
       {insertToggle && (
         <TodoEdit

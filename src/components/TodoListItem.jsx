@@ -14,11 +14,25 @@ const TodoListItem = ({
   onToggle,
   onInsertToggle,
   setSelectedTodo,
+  handleDragStart,
+  handleDragOver,
+  handleDrop,
 }) => {
   const { id, text, checked } = todo;
+
   //console.log(`${id}번 todolistItem에서 todo를 출력함`, todo);
   return (
-    <li className="TodoListItem">
+    <li
+      className="TodoListItem"
+      draggable={true}
+      onDragStart={(e) => {
+        handleDragStart(e, todo);
+      }}
+      onDragOver={handleDragOver}
+      onDrop={(e) => {
+        handleDrop(e, todo);
+      }}
+    >
       <div
         className={cn("checkbox", { checked: checked })}
         onClick={() => {

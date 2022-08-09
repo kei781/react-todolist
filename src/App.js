@@ -89,10 +89,23 @@ function App() {
     }
   };
 
-  const onUpdate = (id, text) => {
-    setTodos((todos) =>
-      todos.map((todo) => (todo.id === id ? { ...todo, text } : todo))
-    );
+  const onUpdate = async (id, text) => {
+    // setTodos((todos) =>
+    //   todos.map((todo) => (todo.id === id ? { ...todo, text } : todo))
+    // );
+    try {
+      const data = await axios({
+        url: `http://localhost:4000/todos/${id}`,
+        method: "PATCH",
+        data: {
+          text,
+          perform_date: "2022-08-09 11:11:11",
+        },
+      });
+      setTodos(data.data);
+    } catch (e) {
+      setError(e);
+    }
     onInsertToggle();
   };
 
@@ -148,13 +161,6 @@ function App() {
           onUpdate={onUpdate}
         />
       )}
-      <button
-        onClick={() => {
-          console.log(todos);
-        }}
-      >
-        check
-      </button>
     </TodoTemplate>
   );
 }

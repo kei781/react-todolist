@@ -60,8 +60,21 @@ function App() {
     setInsertToggle((prev) => !prev);
   };
 
-  const onRemove = (id) => {
-    setTodos((todos) => todos.filter((todo) => todo.id !== id));
+  const onRemove = async (id) => {
+    // setTodos((todos) => todos.filter((todo) => todo.id !== id));
+    try {
+      await axios({
+        url: `http://localhost:4000/todos/${id}`,
+        method: "DELETE",
+      });
+      const data = await axios({
+        url: `http://localhost:4000/todos`,
+        method: "GET",
+      });
+      setTodos(data.data);
+    } catch (e) {
+      setError(e);
+    }
   };
 
   const onToggle = async (id) => {
@@ -135,6 +148,13 @@ function App() {
           onUpdate={onUpdate}
         />
       )}
+      <button
+        onClick={() => {
+          console.log(todos);
+        }}
+      >
+        check
+      </button>
     </TodoTemplate>
   );
 }
